@@ -1,4 +1,17 @@
-
+/*
+ * A simple game made in processing Where you avoid lasers using either a bird or ufo
+ * Copyright (C) 2022 Taha Canturk
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
 String ufoOrBird = "";
 float playerX;
@@ -169,10 +182,32 @@ void drawPauseMenu() {
     text("press \"ENTER\" to continue", width/10*1,height/10*7);
 }
 
+void showCCommand() {
+     background(0xff,0xff,0xff);
+     push();
+     textSize(10);
+     fill(0,0,0);
+     text("\na simple game made in processing\n" +
+          "Copyright (C) 2022 Taha Canturk\n\n" +
+          "This program is free software: you can redistribute\n" +
+          "it and/or modify it under the terms of the GNU General\n" +
+          "Public License as published by the Free Software " +
+          "Foundation,\neither version 3 of the License, or (at your \n" +
+          "option) any later version.\n\nThis program is\n" +
+          "distributed in the hope that it will be useful, but\n" +
+          "WITHOUT ANY WARRANTY; without even the implied warranty\n" +
+          "of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n" +
+          "See the GNU General Public License for more details.\n\n" +
+          "You should have received a copy of the GNU General\n" +
+          "Public License along with this program.  If not, see\n" +
+          "<https://www.gnu.org/licenses/>.",width/10*1,height/10*1);
+     pop();
+}
+
 float currentUfoX;
 float currentUfoY;
 int scoreCount = 0;
-
+boolean licenceCommandRequested = false;
 void draw() {     
     if(started) {
         drawBackground();
@@ -289,10 +324,7 @@ void draw() {
                  }
              }
         }
-        
-        // print current input
-        println("current input:\t" + ufoOrBird);
-        
+                
         // print score on screen
         push();
         textSize(25);
@@ -304,7 +336,34 @@ void draw() {
     }
      if(ufoOrBird.contains("exit")) {
          exit();
+     }else if(ufoOrBird.contains("show w")) { // warranty information
+       if(!ufoOrBird.contains("q")) {
+           background(0xff,0xff,0xff);
+           push();
+           textSize(10);
+           fill(0,0,0);
+           text("THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT\n" +
+                "PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE\n" +
+                "STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER\n" +
+                "PARTIES PROVIDE THE PROGRAM \"AS IS\" WITHOUT WARRANTY OF\n" +
+                "ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT\n" +
+                "NOT LIMITED TO, THE IMPLIED WARRANTIES OF\n" +
+                "MERCHANTABILITY AND FITNESS FOR A PARTICULAR\n" +
+                "PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND\n" +
+                "PERFORMANCE OF THE PROGRAM IS WITH YOU. SHOULD THE\n" +
+                "PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL\n" +
+                "NECESSARY SERVICING, REPAIR OR CORRECTION.\n",
+                width/10*1,height/10*3);
+           pop();
+       }
+     } else if(ufoOrBird.contains("show c")) {
+         if(!ufoOrBird.contains("q")) { // press q for quit showing licence information
+               showCCommand();
+         }
      }
+     // print current input
+     println("current input:\t" + ufoOrBird);
+
 }
 
 // if key = r, reset game
